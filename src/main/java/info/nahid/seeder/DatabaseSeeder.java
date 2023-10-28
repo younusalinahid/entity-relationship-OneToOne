@@ -25,25 +25,7 @@ public class DatabaseSeeder {
     ReviewRepository reviewRepository;
 
 
-    public void seedCourseData() {
-        List<Student> students = new ArrayList<>();
-
-        Student student1 = new Student();
-        student1.setId(20001);
-        student1.setName("Sakib");
-        students.add(student1);
-
-        Student student2 = new Student();
-        student2.setId(20002);
-        student2.setName("Akib");
-        students.add(student2);
-
-        Student student3 = new Student();
-        student3.setId(20003);
-        student3.setName("Hasib");
-        students.add(student3);
-        studentRepository.saveAll(students);
-
+    public void seedData() {
         List<Passport> passports = new ArrayList<>();
 
         Passport passport1 = new Passport();
@@ -61,6 +43,28 @@ public class DatabaseSeeder {
         passport3.setNumber("L1234567");
         passports.add(passport3);
         passportRepositroy.saveAll(passports);
+
+        List<Student> students = new ArrayList<>();
+
+        Student student1 = new Student();
+        student1.setId(20001);
+        student1.setName("Sakib");
+        student1.setPassport(passport1);
+        students.add(student1);
+
+        Student student2 = new Student();
+        student2.setId(20002);
+        student2.setName("Akib");
+        student2.setPassport(passport2);
+        students.add(student2);
+
+        Student student3 = new Student();
+        student3.setId(20003);
+        student3.setName("Hasib");
+        student3.setPassport(passport3);
+        students.add(student3);
+        studentRepository.saveAll(students);
+
 
         List<Review> reviews  = new ArrayList<>();
 

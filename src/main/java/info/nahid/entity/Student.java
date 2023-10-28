@@ -8,6 +8,11 @@ public class Student {
     private Long id;
     private String name;
 
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "passport_id", referencedColumnName = "id")
+    private Passport passport;
+
     public Student() {
 
     }
@@ -30,6 +35,18 @@ public class Student {
 
     public Long getId() {
         return id;
+    }
+
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
