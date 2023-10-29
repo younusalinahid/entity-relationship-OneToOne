@@ -7,6 +7,8 @@ import info.nahid.repository.PassportRepositroy;
 import info.nahid.repository.ReviewRepository;
 import info.nahid.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,8 +26,15 @@ public class DatabaseSeeder {
     @Autowired
     ReviewRepository reviewRepository;
 
+    @EventListener
+    public void seed(ContextRefreshedEvent event) {
+        seedPassportData();
+        seedStudentData();
+        seedReviewData();
 
-    public void seedData() {
+    }
+
+    public void seedPassportData(){
         List<Passport> passports = new ArrayList<>();
 
         Passport passport1 = new Passport();
@@ -43,29 +52,36 @@ public class DatabaseSeeder {
         passport3.setNumber("L1234567");
         passports.add(passport3);
         passportRepositroy.saveAll(passports);
+    }
 
+    public void seedStudentData() {
         List<Student> students = new ArrayList<>();
 
+        Passport passport1 = passportRepositroy.findById(40001L).orElse(null);
         Student student1 = new Student();
         student1.setId(20001);
         student1.setName("Sakib");
         student1.setPassport(passport1);
         students.add(student1);
 
+        Passport passport2 = passportRepositroy.findById(40002L).orElse(null);
         Student student2 = new Student();
         student2.setId(20002);
         student2.setName("Akib");
         student2.setPassport(passport2);
         students.add(student2);
 
+        Passport passport3 = passportRepositroy.findById(40003L).orElse(null);
         Student student3 = new Student();
         student3.setId(20003);
         student3.setName("Hasib");
         student3.setPassport(passport3);
         students.add(student3);
+
         studentRepository.saveAll(students);
+    }
 
-
+    public void seedReviewData() {
         List<Review> reviews  = new ArrayList<>();
 
         Review review1 = new Review();
@@ -86,7 +102,6 @@ public class DatabaseSeeder {
         review3.setDescription("Awesome Course");
         reviews.add(review3);
         reviewRepository.saveAll(reviews);
-
     }
 
 }
