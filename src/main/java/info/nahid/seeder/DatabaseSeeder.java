@@ -3,7 +3,7 @@ package info.nahid.seeder;
 import info.nahid.entity.Passport;
 import info.nahid.entity.Review;
 import info.nahid.entity.Student;
-import info.nahid.repository.PassportRepositroy;
+import info.nahid.repository.PassportRepository;
 import info.nahid.repository.ReviewRepository;
 import info.nahid.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class DatabaseSeeder {
     StudentRepository studentRepository;
 
     @Autowired
-    PassportRepositroy passportRepositroy;
+    PassportRepository passportRepository;
 
     @Autowired
     ReviewRepository reviewRepository;
@@ -51,27 +51,27 @@ public class DatabaseSeeder {
         passport3.setId(40003);
         passport3.setNumber("L1234567");
         passports.add(passport3);
-        passportRepositroy.saveAll(passports);
+        passportRepository.saveAll(passports);
     }
 
     public void seedStudentData() {
         List<Student> students = new ArrayList<>();
 
-        Passport passport1 = passportRepositroy.findById(40001L).orElse(null);
+        Passport passport1 = passportRepository.findById(40001L).orElse(null);
         Student student1 = new Student();
         student1.setId(20001);
         student1.setName("Sakib");
         student1.setPassport(passport1);
         students.add(student1);
 
-        Passport passport2 = passportRepositroy.findById(40002L).orElse(null);
+        Passport passport2 = passportRepository.findById(40002L).orElse(null);
         Student student2 = new Student();
         student2.setId(20002);
         student2.setName("Akib");
         student2.setPassport(passport2);
         students.add(student2);
 
-        Passport passport3 = passportRepositroy.findById(40003L).orElse(null);
+        Passport passport3 = passportRepository.findById(40003L).orElse(null);
         Student student3 = new Student();
         student3.setId(20003);
         student3.setName("Hasib");

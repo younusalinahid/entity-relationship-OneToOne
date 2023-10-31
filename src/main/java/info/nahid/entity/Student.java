@@ -9,7 +9,7 @@ public class Student {
     private String name;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "passport_id", referencedColumnName = "id")
     private Passport passport;
 
