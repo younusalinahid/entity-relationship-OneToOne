@@ -6,6 +6,7 @@ import javax.persistence.*;
 public class Student {
     @Id
     private Long id;
+   @Column(nullable = false)
     private String name;
 
 
