@@ -1,8 +1,10 @@
 package info.nahid.seeder;
 
+import info.nahid.entity.Course;
 import info.nahid.entity.Passport;
 import info.nahid.entity.Review;
 import info.nahid.entity.Student;
+import info.nahid.repository.CourseRepository;
 import info.nahid.repository.PassportRepository;
 import info.nahid.repository.ReviewRepository;
 import info.nahid.repository.StudentRepository;
@@ -26,12 +28,15 @@ public class DatabaseSeeder {
     @Autowired
     ReviewRepository reviewRepository;
 
+    @Autowired
+    CourseRepository courseRepository;
+
     @EventListener
     public void seed(ContextRefreshedEvent event) {
         seedPassportData();
         seedStudentData();
+        seedCourseData();
         seedReviewData();
-
     }
 
     public void seedPassportData(){
@@ -77,29 +82,54 @@ public class DatabaseSeeder {
         student3.setName("Hasib");
         student3.setPassport(passport3);
         students.add(student3);
-
         studentRepository.saveAll(students);
+    }
+
+    public void seedCourseData() {
+        List<Course> courses = new ArrayList<>();
+
+        Course course1 = new Course();
+        course1.setId(10001);
+        course1.setName("JPA in 50 Steps");
+        courses.add(course1);
+
+        Course course2 = new Course();
+        course2.setId(10002);
+        course2.setName("Spring boot basics");
+        courses.add(course2);
+
+        Course course3 = new Course();
+        course3.setId(10003);
+        course3.setName("Hibernate Fundamentals");
+        courses.add(course3);
+        courseRepository.saveAll(courses);
     }
 
     public void seedReviewData() {
         List<Review> reviews  = new ArrayList<>();
 
+        Course course1 = courseRepository.findById(10001L).orElse(null);
         Review review1 = new Review();
         review1.setId(50001);
         review1.setRating("5");
         review1.setDescription("Great Course");
+        review1.setCourse(course1);
         reviews.add(review1);
 
+        Course course2 = courseRepository.findById(10002L).orElse(null);
         Review review2 = new Review();
         review2.setId(50002);
         review2.setRating("4");
         review2.setDescription("Wonderful Course");
+        review2.setCourse(course2);
         reviews.add(review2);
 
+        Course course3 = courseRepository.findById(10003L).orElse(null);
         Review review3 = new Review();
         review3.setId(50003);
         review3.setRating("5");
         review3.setDescription("Awesome Course");
+        review3.setCourse(course3);
         reviews.add(review3);
         reviewRepository.saveAll(reviews);
     }
