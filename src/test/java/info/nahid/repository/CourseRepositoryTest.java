@@ -25,9 +25,9 @@ public class CourseRepositoryTest {
     @Transactional
     public void retrieveReviewsForCourse() {
         Course course = courseRepository.findById(10001L).orElse(null);
-        logger.info("passport -> {}", course);
+        logger.info("course -> {}", course);
         if (course != null) {
-            logger.info("student -> {}", course.getReviews());
+            logger.info("review -> {}", course.getReviews());
         }
     }
 
@@ -37,7 +37,7 @@ public class CourseRepositoryTest {
         Review review = reviewRepository.findById(50001L).orElse(null);
         logger.info("review -> {}", review);
         if (review != null) {
-            logger.info("review -> {}",review.getCourse());
+            logger.info("course -> {}",review.getCourse());
         }
     }
 }

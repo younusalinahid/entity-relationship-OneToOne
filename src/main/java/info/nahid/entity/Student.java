@@ -1,6 +1,8 @@
 package info.nahid.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Student {
@@ -9,10 +11,15 @@ public class Student {
    @Column(nullable = false)
     private String name;
 
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "passport_id", referencedColumnName = "id")
     private Passport passport;
+
+    @ManyToMany
+    @JoinTable(name = "student_course",
+    joinColumns = @JoinColumn(name = "student_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<Course> courses = new ArrayList<>();
 
     public Student() {
 
@@ -48,6 +55,14 @@ public class Student {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
     @Override

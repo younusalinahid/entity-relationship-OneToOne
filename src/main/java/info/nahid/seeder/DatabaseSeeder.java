@@ -37,6 +37,7 @@ public class DatabaseSeeder {
         seedStudentData();
         seedCourseData();
         seedReviewData();
+
     }
 
     public void seedPassportData(){
@@ -59,32 +60,6 @@ public class DatabaseSeeder {
         passportRepository.saveAll(passports);
     }
 
-    public void seedStudentData() {
-        List<Student> students = new ArrayList<>();
-
-        Passport passport1 = passportRepository.findById(40001L).orElse(null);
-        Student student1 = new Student();
-        student1.setId(20001);
-        student1.setName("Sakib");
-        student1.setPassport(passport1);
-        students.add(student1);
-
-        Passport passport2 = passportRepository.findById(40002L).orElse(null);
-        Student student2 = new Student();
-        student2.setId(20002);
-        student2.setName("Akib");
-        student2.setPassport(passport2);
-        students.add(student2);
-
-        Passport passport3 = passportRepository.findById(40003L).orElse(null);
-        Student student3 = new Student();
-        student3.setId(20003);
-        student3.setName("Hasib");
-        student3.setPassport(passport3);
-        students.add(student3);
-        studentRepository.saveAll(students);
-    }
-
     public void seedCourseData() {
         List<Course> courses = new ArrayList<>();
 
@@ -103,6 +78,39 @@ public class DatabaseSeeder {
         course3.setName("Hibernate Fundamentals");
         courses.add(course3);
         courseRepository.saveAll(courses);
+    }
+
+    public void seedStudentData() {
+        List<Student> students = new ArrayList<>();
+
+        Passport passport1 = passportRepository.findById(40001L).orElse(null);
+        Course course1 = courseRepository.findById(10001L).orElse(null);
+        Student student1 = new Student();
+        student1.setId(20001);
+        student1.setName("Sakib");
+        student1.setPassport(passport1);
+        student1.getCourses().add(course1);
+        students.add(student1);
+
+        Passport passport2 = passportRepository.findById(40002L).orElse(null);
+        Course course2 = courseRepository.findById(10002L).orElse(null);
+        Student student2 = new Student();
+        student2.setId(20002);
+        student2.setName("Akib");
+        student2.setPassport(passport2);
+        student2.getCourses().add(course2);
+        students.add(student2);
+
+        Passport passport3 = passportRepository.findById(40003L).orElse(null);
+        Course course3 = courseRepository.findById(10003L).orElse(null);
+        Student student3 = new Student();
+        student3.setId(20003);
+        student3.setName("Hasib");
+        student3.setPassport(passport3);
+        student3.getCourses().add(course3);
+        students.add(student3);
+
+        studentRepository.saveAll(students);
     }
 
     public void seedReviewData() {
@@ -133,5 +141,6 @@ public class DatabaseSeeder {
         reviews.add(review3);
         reviewRepository.saveAll(reviews);
     }
+
 
 }
