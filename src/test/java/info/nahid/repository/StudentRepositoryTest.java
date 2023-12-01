@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import javax.transaction.Transactional;
 
 @DataJpaTest
@@ -50,6 +49,16 @@ public class StudentRepositoryTest {
         logger.info("passport -> {}", passport);
         if (passport != null) {
             logger.info("student -> {}", passport.getStudent());
+        }
+    }
+
+    @Test
+    @Transactional
+    public void retrieveStudentAndCourses() {
+        Student student = studentRepository.findById(20001L).orElse(null);
+        logger.info("student -> {}", student);
+        if (student != null) {
+            logger.info("courses -> {}", student.getCourses());
         }
     }
 }
