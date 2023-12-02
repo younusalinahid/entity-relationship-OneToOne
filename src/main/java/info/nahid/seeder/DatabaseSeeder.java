@@ -1,18 +1,13 @@
 package info.nahid.seeder;
 
-import info.nahid.entity.Course;
-import info.nahid.entity.Passport;
-import info.nahid.entity.Review;
-import info.nahid.entity.Student;
-import info.nahid.repository.CourseRepository;
-import info.nahid.repository.PassportRepository;
-import info.nahid.repository.ReviewRepository;
-import info.nahid.repository.StudentRepository;
+import info.nahid.entity.*;
+import info.nahid.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +26,16 @@ public class DatabaseSeeder {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
+    EmployeeRepository employeeRepository;
+
     @EventListener
     public void seed(ContextRefreshedEvent event) {
         seedPassportData();
         seedStudentData();
         seedCourseData();
         seedReviewData();
+        seedEmployeeData();
 
     }
 
@@ -140,6 +139,23 @@ public class DatabaseSeeder {
         review3.setCourse(course3);
         reviews.add(review3);
         reviewRepository.saveAll(reviews);
+    }
+
+    public void seedEmployeeData() {
+        List<Employee> employees = new ArrayList<>();
+
+        PartTimeEmployee partTimeEmployee = new PartTimeEmployee();
+        partTimeEmployee.setId(60001);
+        partTimeEmployee.setName("Jill");
+        partTimeEmployee.setHourlyWage(new BigDecimal("50"));
+        employees.add(partTimeEmployee);
+
+        FullTimeEmployee fullTimeEmployee = new FullTimeEmployee();
+        fullTimeEmployee.setId(60002);
+        fullTimeEmployee.setName("Jack");
+        fullTimeEmployee.setSalary(new BigDecimal("10000"));
+        employees.add(fullTimeEmployee);
+        employeeRepository.saveAll(employees);
     }
 
 
