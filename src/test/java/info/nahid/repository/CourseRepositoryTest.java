@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import javax.transaction.Transactional;
+import java.util.List;
 
 @DataJpaTest
 public class CourseRepositoryTest {
@@ -37,7 +37,26 @@ public class CourseRepositoryTest {
         Review review = reviewRepository.findById(50001L).orElse(null);
         logger.info("review -> {}", review);
         if (review != null) {
-            logger.info("course -> {}",review.getCourse());
+            logger.info("course -> {}", review.getCourse());
         }
     }
+
+    @Test
+    public void jpql_courses_without_students() {
+        List<Course> resultList = courseRepository.findCoursesWithoutStudent();
+        logger.info("Results -> {}", resultList);
+    }
+
+    @Test
+    public void jpql_courses_with_atLeast_Two_students() {
+        List<Course> resultList = courseRepository.findCoursesWithAtLeastTwoStudents();
+        logger.info("Results -> {}", resultList);
+    }
+
+    @Test
+    public void jpql_courses_ordered_by_students() {
+        List<Course> resultList = courseRepository.findCoursesOrderedByStudents();
+        logger.info("Results -> {}", resultList);
+    }
+
 }
