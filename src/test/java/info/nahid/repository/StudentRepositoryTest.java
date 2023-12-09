@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.Logger;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @DataJpaTest
 public class StudentRepositoryTest {
@@ -61,11 +60,5 @@ public class StudentRepositoryTest {
         if (student != null) {
             logger.info("courses -> {}", student.getCourses());
         }
-    }
-
-    @Test
-    public void jpql_students_with_passports_in_a_certain_pattern() {
-        List<Student> resultList = studentRepository.findStudentsWithHavingPassportPattern("1234");
-        logger.info("Results -> {}", resultList);
     }
 }

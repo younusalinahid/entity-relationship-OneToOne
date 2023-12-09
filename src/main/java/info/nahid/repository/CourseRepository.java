@@ -19,4 +19,12 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("SELECT c FROM Course c order by SIZE(c.students) desc ")
     List<Course> findCoursesOrderedByStudents();
 
+    @Query("SELECT c FROM Course c JOIN FETCH c.students")
+    List<Course> findCourseWithStudentJoinQuery();
+
+    @Query("SELECT c FROM Course c LEFT JOIN FETCH c.students")
+    List<Course> findCourseWithStudentLeftJoinQuery();
+
+    @Query("SELECT c, s FROM Course c, Student s")
+    List<Course> findCoursesAndStudentsCrossJoin();
 }
