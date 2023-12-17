@@ -7,7 +7,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import javax.transaction.Transactional;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest
 public class CourseRepositoryTest {
@@ -38,5 +47,42 @@ public class CourseRepositoryTest {
         if (review != null) {
             logger.info("course -> {}", review.getCourse());
         }
+    }
+
+
+    @Test
+    public void findById_CoursePresent() {
+        courseRepository.findById(10001L).ifPresent(course -> assertEquals("JPA in 50 Steps", course.getName()));
+
+    }
+
+    @Test
+    public void findById_CourseNotPresent() {
+        Optional<Course> courseOptional = courseRepository.findById(20001L);
+        assertFalse(courseOptional.isPresent());
+    }
+
+    @Test
+    public void playingAroundWithSpringDataRepository() {
+        logger.info("Courses -> {} ", courseRepository.findAll());
+        logger.info("Count -> {} ", courseRepository.count());
+    }
+
+    @Test
+    public void sort() {
+        Sort sort = Sort.by(Sort.Direction.ASC, "name");
+        logger.info("Courses -> {} ", courseRepository.findAll(sort));
+        logger.info("Count -> {} ", courseRepository.count());
+    }
+
+    @Test
+    public void pagination() {
+        PageRequest pageRequest = PageRequest.of(0, 3);
+        Page<Course> firtPage = courseRepository.findAll(pageRequest);
+        logger.info("First Page -> {} ", firtPage.getContent());
+
+        Pageable secondPageable = firtPage.nextPageable();
+        Page<Course> secondPage = courseRepository.findAll(secondPageable);
+        logger.info("Second Page -> {} ", secondPage.getContent());
     }
 }
